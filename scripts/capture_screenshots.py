@@ -61,7 +61,7 @@ class UI:
     def shot(self, name: str) -> None:
         path = self.out / name
         self.page.screenshot(path=path, full_page=True)
-        print(f"saved {path.relative_to(ROOT)}")
+        print(f"saved {path}")
 
 
 def main() -> None:
