@@ -1,0 +1,18 @@
+# Local Gemma 4 deployment used by the assistant.
+#
+#   ollama pull hf.co/google/gemma-4-E2B-it-qat-q4_0-gguf
+#   ollama create gemma4-assistant -f Modelfile
+#
+# Base: Google's official Gemma 4 E2B instruction-tuned GGUF (QAT Q4_0, Apache-2.0),
+# which ships a separate vision+audio projector (mmproj). On Ollama 0.34.4 (Windows,
+# llama-server backend) the library tag `gemma4:e2b` returns garbage image descriptions
+# because its bundled projector must be converted at load time; this build avoids that.
+FROM hf.co/google/gemma-4-E2B-it-qat-q4_0-gguf
+
+# Google's recommended sampling for Gemma 4.
+PARAMETER temperature 1.0
+PARAMETER top_p 0.95
+PARAMETER top_k 64
+
+# Room for an image (~250-700 tokens), a voice transcript and a few turns of history.
+PARAMETER num_ctx 8192
